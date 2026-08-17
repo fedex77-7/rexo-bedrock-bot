@@ -1,0 +1,30 @@
+name: Rexo Bedrock Bot
+
+on:
+  workflow_dispatch:
+
+jobs:
+  bedrock-bot:
+    runs-on: ubuntu-latest
+
+    timeout-minutes: 350
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+
+      - name: Install dependencies
+        run: npm install
+
+      - name: Start Bedrock bot
+        env:
+          MC_HOST: ${{ secrets.MC_HOST }}
+          MC_PORT: ${{ secrets.MC_PORT }}
+          BOT_USERNAME: ${{ secrets.BOT_USERNAME }}
+        run: npm start
